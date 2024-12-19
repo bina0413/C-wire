@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     while(1)
     {
             if(fscanf(file, "%d;%d;%d;%d\n", &a,&b,&c,&d)==EOF){break;}
-            printf("a=%d b=%d c=%u d=%u\n", a,b,c,d);  
+//            printf("a=%d b=%d c=%u d=%u\n", a,b,c,d);  
             ptr_avl=insertionArbre(ptr_avl,a,c,d);
     }
 
