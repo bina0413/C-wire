@@ -79,7 +79,7 @@ int hauteur(Arbre *ptr_avl){
 
 Arbre * equilibrage(Arbre *ptr_avl){
 	if(ptr_avl->eq >1){
-		printf("besoin d'equilibrage");
+		//printf("besoin d'equilibrage");
 		if(ptr_avl->fd->eq >=0){
 
 			ptr_avl= rotationGauche(ptr_avl);
