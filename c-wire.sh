@@ -152,6 +152,28 @@ calcul() { # parametre : chemin nouveau fichier csv avec donnees triees
 		fi
 }
 
+creationFichierSortie(){
+echo "Station $station:Capacité:Consomation ($conso)" > $fichier
+sort -t ":" -k 2 -n codeC/calcule.csv >> $fichier 
+echo "création fichier sortie $fichier est terminée, vous pouvez consulter dans le repertoire courant"
+
+}
+creationMinMax(){
+
+
+	echo "Station LV(MinMax) :Capacité :Consomation (tous)" > lv_all_minmax.csv
+	#awk -F ':' '{print $0":"$(($2-$3))}' codeC/calcule.csv >> lv_all_minmax aider par l'ia
+	awk -F ':' '{print $0 ":" ($2 - $3)}'  codeC/calcule.csv > temp.csv && mv temp.csv codeC/calcule.csv
+	sort -t ":" -k 4 -n codeC/calcule.csv >> lv_all_minmax.csv
+	head lv_all_minmax.csv >> temp.csv && mv temp.csv lv_all_minmax.csv
+	tail lv_all_minmax.csv >> temp.csv && mv temp.csv lv_all_minmax.csv
+
+	cut -d ':' -f1,2,3 lv_all_minmax.csv > temp.csv && mv temp.csv lv_all_minmax.csv
+	echo "création fichier lv_all_minmax.csv terminée, vous pouvez consulter dans le repertoire courant"
+
+
+}
+
 
 
 # ******** MAIN *************
@@ -183,10 +205,13 @@ temps1=$(date +%s)
 	calcul						# appel du programme de calcul C prend le fichier trie en parametre
 temps2=$(date +%s)	
 duree=$((temps2-temps1)) 		#calcul de la duree de l'execution
-echo "Station $station:Capacité:Consomation ($conso)" > fichier_tmp.csv
-sort -t ":" -k 2 -n codeC/calcule.csv
-cat < fichier_tmp.csv | head codeC/calcule.csv >> $fichier
-cat < fichier_tmp.csv | tail codeC/calcule.csv >> $fichier
-echo "le programme a duré $duree secondes"
+
+creationFichierSortie
+if [ $conso == "all" ]
+then
+	creationMinMax
+fi
+
+echo "durée du programme: $duree secondes"
 
 
