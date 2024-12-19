@@ -1,0 +1,13 @@
+il faut de nombreuses fonctions pour gérer les AVL:
+pour l'instant on se concentre sur les HVB
+insersion
+création neuds
+suppression
+rotations (G,D,DG,DD)
+réiquilibrage
+
+créationArbre()
+insertionArbre()
+equilibrage()
+rotationGauche()
+rotationDroite()
