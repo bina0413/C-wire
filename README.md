@@ -17,11 +17,15 @@ points qui fonctionne bien:
     
   
 
-points présents mais qui fonctionne mal:
+points présents mais qui fonctionnent mal:
 
   - le temps est bien donné mais il comprend parfois la durée de compilation du programme C (lorsque celui ci est recompilé après modification)
   - le temps est long > 1min pour les station lv 
-  
+
+
+  RAPPORT:
+    Aucune repartition des taches car projet effectué seule
+    le plus du gros travaille a été effectué le weekend du 14 decembre.
 
 points qui sont absents de ce projet:
   - la création de graphique
