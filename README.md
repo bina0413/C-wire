@@ -14,7 +14,7 @@ points présents mais qui fonctionne mal:
   
 
 points qui sont absents de ce projet:
-  la libération des neud et variables en C
-  la création de graphique
-  l'option help -h d'aide
-  le triage de minmax selon les surproduction ou sous production
+  - la libération des neud et variables en C
+  - la création de graphique
+  - l'option help -h d'aide
+  - le triage de minmax selon les surproduction ou sous production
