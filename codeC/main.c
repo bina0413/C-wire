@@ -8,43 +8,44 @@ int main(int argc, char *argv[]) {
     // Vérifier si un argument a été passé
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <nom_du_fichier>\n", argv[0]);
-        return 1;  // Code d'erreur
+        return 1;
     }
 
-    // Le nom du fichier est passé dans argv[1]
-    char *filename = argv[1];
+    // On recupère le nom du fichier passé dans argv[1]
+    char *nomfichier = argv[1];
 
     // Ouverture du fichier
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
+    FILE *ficher1 = fopen(nomfichier, "r");
+    if (ficher1 == NULL) {
         perror("Erreur lors de l'ouverture du fichier");
-        return 6;  // Code d'erreur
+        return 6;
     }
 
-    printf("Le fichier %s a été ouvert avec succès !!\n", filename);
-    int a,c, b,d;
+    printf("Le fichier %s a été ouvert avec succès !!\n", nomfichier);
+    int a,b;
+    unsigned int c,d;
 
+    // création de l'AVL , recuperation des données du tableau jusqu'a fin de fichier
     Arbre* ptr_avl=NULL;
     while(1)
     {
-            if(fscanf(file, "%d;%d;%d;%d\n", &a,&b,&c,&d)==EOF){break;}
-//            printf("a=%d b=%d c=%u d=%u\n", a,b,c,d);  
+            if(fscanf(ficher1, "%d;%d;%u;%u\n", &a,&b,&c,&d)==EOF){break;}
             ptr_avl=insertionArbre(ptr_avl,a,c,d);
     }
 
 
-    // Lire et traiter le fichier...
-    FILE *ficher = fopen("calcule.csv", "w+");
-    if (ficher == NULL) {
+    // ouvrir et remplir le fichier calcule
+    FILE *ficher2 = fopen("calcule.csv", "w+");
+    if (ficher2 == NULL) {
         printf("Erreur lors de l'ouverture du fichier");
-        return 6;  // Code d'erreur
+        return 6; 
     }
     printf("Le fichier %s a été ouvert avec succès !\n", "calcule.csv");
-    parcoursArbre(ptr_avl,ficher);
-    fclose(file);
-    fclose(ficher);
-    // liberer la memoire
-    //ameliorer la robustesse
+    parcoursArbre(ptr_avl,ficher2);
+    fclose(ficher1);
+    fclose(ficher2);
 
+    // liberer la memoire
+    suppression(ptr_avl);
     return 0;  // Succès
 }
