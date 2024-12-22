@@ -1,3 +1,4 @@
+Bineta DIOP MI3
 Bienvenue,
 
 comment utiliser ce programme:
