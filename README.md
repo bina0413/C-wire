@@ -1,6 +1,7 @@
 Bienvenue
 comment utiliser ce programme:
 points qui fonctionne bien:
+  
   la verification des option (présence + compatibilité des station et consommateurs)
   la vérification de la présence des differents repertoirs nécessaire
   
