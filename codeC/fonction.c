@@ -40,12 +40,6 @@ int hauteur(Arbre *ptr_avl){
 		pivot->hauteur=max(hauteur(pivot->fg),hauteur(pivot->fd)) ;
 
 
-		/*eq_a=ptr_avl->eq;
-		eq_p=pivot->eq;
-		ptr_avl->eq= eq_a - max(eq_p, 0) - 1;
-		pivot->eq=min( eq_a-2, min(eq_a+eq_p-2, eq_p-1) );
-
-		ptr_avl=pivot;*/
 	return pivot;
 	}
 
@@ -120,7 +114,6 @@ Arbre* creatonArbre(Arbre* ptr_avl, int a,int c,int d ){
 }
 Arbre* insertionArbre(Arbre *ptr_avl, int a,int c,int d){
 	if(ptr_avl==NULL){
-			//printf("création %d\n",a);
 		return creatonArbre(ptr_avl,a,c,d);
 
 	}
@@ -139,17 +132,10 @@ Arbre* insertionArbre(Arbre *ptr_avl, int a,int c,int d){
 
 
 	}
-	/*if(*h != 0){
-		ptr_avl->eq += *h;
-		ptr_avl=equilibrage(ptr_avl,h);
-		if(ptr_avl->eq ==0){
-			*h=0;
-		}
-		else{
-			*h=1;
-		}
-}
-		*/
+
+	// nouvelle idée, ranger l'arbre par capacité puis faire la parcours infix, le dossier deja trié
+	// ajouter l'element charge = c-d et l'ajouter dans le tableau
+	
 		
 
 		ptr_avl->eq=hauteur(ptr_avl->fd)-hauteur(ptr_avl->fg);
@@ -160,17 +146,22 @@ Arbre* insertionArbre(Arbre *ptr_avl, int a,int c,int d){
 	return ptr_avl;
 }
 
-/*Arbre* suppression(){
+Arbre* suppression(Arbre *ptr_avl){
 
+    if (ptr_avl != NULL) {
+       
+	    // Supprimer récursivement les sous-arbre gauche et droit successifs
+	suppression(ptr_avl->fg);
+	suppression(ptr_avl->fd);
 
-
-	free()
+    // Libérer la mémoire du nœud actuel
+    free(ptr_avl);
+	}
 }
-*/
+
 int parcoursArbre(Arbre*ptr_avl,FILE* fichier){
-	if(ptr_avl!=NULL){
+	if(ptr_avl!=NULL){ // parcours infix pour remplir le fichier csv
 	parcoursArbre(ptr_avl->fg,fichier);
-	printf("%d:%u:%u \n",ptr_avl->id_stat, ptr_avl->capacite, ptr_avl->consom);
 	fprintf(fichier,"%d:%u:%u\n",ptr_avl->id_stat, ptr_avl->capacite, ptr_avl->consom);
 	parcoursArbre(ptr_avl->fd,fichier);
 	}
@@ -188,12 +179,3 @@ quand on ajout un nouveau neud:
 		-si il n'existe pas (on tombe sur NULL) creer le nouveau neud
 	quand on arrive a la fin on a 1 seul neud par station avec la somme des consomation pour chaque
 */
-
-
-/* déroulé de l'algo:
-	1- creer l'arbre
-	2- remplire l'arbre equilibrer si besoin
-	3- faire un parcours prefix
-	4- 
-*/
-	
