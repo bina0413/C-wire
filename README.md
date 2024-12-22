@@ -13,8 +13,8 @@ points qui fonctionne bien:
   - le filtrage du fichier data.csv
   - le trie en fonction de la capacité
   - la libération de la mémoire
+  - l'execution du programe C depuis le Makefile
     
-  
   
 
 points présents mais qui fonctionne mal:
@@ -26,4 +26,5 @@ points présents mais qui fonctionne mal:
 points qui sont absents de ce projet:
   - la création de graphique
   - l'option help -h d'aide
+  - la commande 'clean' n'est pas inclue dans le makefile
     
