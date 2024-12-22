@@ -8,7 +8,7 @@ erreur(){ # parametre entier positif, message selon code d'erreur
 	message1="Verifiez que les répertoires tmp, graphs,codeC, imput et test sont des dossiers existants"
 	message2="Le chemin d'entré est invalide ou le fichier n'existe pas"
 	message3="Nombre de parametres insuffisant: ./c-wire <chemin> <station> <client> (<identifiant>)"
-	message4="Les parametres <2> et {3} peut respectivement prendre les valeurs permis: <"hvb","hva","lv"> et {"all","comp","indiv"}"
+	message4="Les parametres <2> et {3} peut respectivement prendre les valeurs: <"hvb","hva","lv"> et {"all","comp","indiv"}"
 	message5="Les staions hvb et hva ne prennent que des entreprises en clients. Entrez des parametres correctes"
 	message6="Le fichier C n'existe pas"
 	case $1 in
@@ -91,10 +91,10 @@ dossier(){
 
 
 
-filtrer(){ # parametre data.csv station conso ident
+filtrer(){
 
 
-	case $station in # recuperer le numero de colone a analyser
+	case $station in # recuperer le numero de colone a analyser en finction de la station voulue
 		hvb) colone1=2;;
 		hva) colone1=3;;
 		lv) colone1=4;;
@@ -153,24 +153,23 @@ calcul() { # parametre : chemin nouveau fichier csv avec donnees triees
 }
 
 creationFichierSortie(){
-echo "Station $station:Capacité:Consomation ($conso)" > $fichier
-sort -t ":" -k 2 -n codeC/calcule.csv >> $fichier 
-echo "création fichier sortie $fichier est terminée, vous pouvez consulter dans le repertoire courant"
+	echo "Station $station:Capacité:Consomation ($conso)" > $fichier
+	sort -t ":" -k 2 -n codeC/calcule.csv >> $fichier 
+	cat codeC/calcule.csv >> $fichier
+	echo "création fichier sortie $fichier est terminée, vous pouvez consulter dans le repertoire /test"
 
 }
 creationMinMax(){
 
 
-	echo "Station LV(MinMax) :Capacité :Consomation (tous)" > lv_all_minmax.csv
-	#awk -F ':' '{print $0":"$(($2-$3))}' codeC/calcule.csv >> lv_all_minmax aider par l'ia
-	awk -F ':' '{print $0 ":" ($2 - $3)}'  codeC/calcule.csv > temp.csv && mv temp.csv codeC/calcule.csv
-	sort -t ":" -k 4 -n codeC/calcule.csv >> lv_all_minmax.csv
-	head lv_all_minmax.csv >> temp.csv && mv temp.csv lv_all_minmax.csv
-	tail lv_all_minmax.csv >> temp.csv && mv temp.csv lv_all_minmax.csv
+	echo "Station LV(MinMax) :Capacité :Consomation (tous)" > test/lv_all_minmax.csv
+	awk -F ':' '{print $0 ":" ($2 - $3)}'  codeC/calcule.csv > temp.csv && mv temp.csv codeC/calcule.csv # aidé chatGPT
+	sort -t ":" -k 4 -n codeC/calcule.csv >> test/lv_all_minmax.csv
+	head test/lv_all_minmax.csv >> temp.csv && mv temp.csv test/lv_all_minmax.csv
+	tail test/lv_all_minmax.csv >> temp.csv && mv temp.csv test/lv_all_minmax.csv
 
-	cut -d ':' -f1,2,3 lv_all_minmax.csv > temp.csv && mv temp.csv lv_all_minmax.csv
-	echo "création fichier lv_all_minmax.csv terminée, vous pouvez consulter dans le repertoire courant"
-
+	cut -d ':' -f1,2,3 test/lv_all_minmax.csv > temp.csv && mv temp.csv test/lv_all_minmax.csv
+	echo "création fichier lv_all_minmax.csv terminée, vous pouvez consulter dans le repertoire /test"
 
 }
 
@@ -186,10 +185,10 @@ conso=$3
 if [ -z "$4" ] 
 then
 	ident=0
-	fichier=$station"_"$conso".csv"
+	fichier="test/"$station"_"$conso".csv"
 else
 	ident=$4
-	fichier=$station"_"$conso"_"$ident".csv"
+	fichier="test/"$station"_"$conso"_"$ident".csv"
 fi
 verif $chemin $station $conso 			# procède aux verifications des parametre
 cp $chemin imput/data.csv 				# copier le fichier d'entrée dans imput
