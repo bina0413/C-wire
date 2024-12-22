@@ -44,4 +44,5 @@ Arbre* creatonArbre(Arbre* ptr_avl, int a,int c,int d );
 Arbre* insertionArbre(Arbre *ptr_avl, int a,int c,int d);
 int parcoursArbre(Arbre*ptr_avl,FILE* fichier);
 int hauteur(Arbre *ptr_avl);
+Arbre* suppression(Arbre *ptr_avl);
 #endif
